@@ -14,6 +14,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "libraries/cpr/include"
   "libraries/cpr/opt/curl/include"
   "libraries/cpr/opt/curl/include/curl"
+  "/usr/local/include"
   )
 
 # Targets to which this target links.

@@ -86,6 +86,9 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/local/Cellar/cmake/3.14.5/share/cmake/Modules/Platform/Darwin.cmake"
   "/usr/local/Cellar/cmake/3.14.5/share/cmake/Modules/Platform/UnixPaths.cmake"
   "/usr/local/Cellar/cmake/3.14.5/share/cmake/Modules/SelectLibraryConfigurations.cmake"
+  "/usr/local/lib/cmake/nlohmann_json/nlohmann_jsonConfig.cmake"
+  "/usr/local/lib/cmake/nlohmann_json/nlohmann_jsonConfigVersion.cmake"
+  "/usr/local/lib/cmake/nlohmann_json/nlohmann_jsonTargets.cmake"
   )
 
 # The corresponding makefile is:

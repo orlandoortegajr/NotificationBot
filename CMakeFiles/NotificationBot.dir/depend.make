@@ -3,9 +3,11 @@
 
 CMakeFiles/NotificationBot.dir/src/main.cpp.o: include/weather.h
 CMakeFiles/NotificationBot.dir/src/main.cpp.o: src/main.cpp
+CMakeFiles/NotificationBot.dir/src/main.cpp.o: /usr/local/include/nlohmann/json.hpp
 
 CMakeFiles/NotificationBot.dir/src/weather.cpp.o: include/weather.h
 CMakeFiles/NotificationBot.dir/src/weather.cpp.o: src/weather.cpp
+CMakeFiles/NotificationBot.dir/src/weather.cpp.o: /usr/local/include/nlohmann/json.hpp
 CMakeFiles/NotificationBot.dir/src/weather.cpp.o: libraries/cpr/include/cpr/api.h
 CMakeFiles/NotificationBot.dir/src/weather.cpp.o: libraries/cpr/include/cpr/auth.h
 CMakeFiles/NotificationBot.dir/src/weather.cpp.o: libraries/cpr/include/cpr/body.h

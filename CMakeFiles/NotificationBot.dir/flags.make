@@ -6,5 +6,5 @@ CXX_FLAGS =  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk 
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/orlandoortega/Desktop/NotificationBot/libraries/cpr/include -I/Users/orlandoortega/Desktop/NotificationBot/libraries/cpr/opt/curl/include -I/Users/orlandoortega/Desktop/NotificationBot/libraries/cpr/opt/curl/include/curl 
+CXX_INCLUDES = -I/Users/orlandoortega/Desktop/NotificationBot/libraries/cpr/include -I/Users/orlandoortega/Desktop/NotificationBot/libraries/cpr/opt/curl/include -I/Users/orlandoortega/Desktop/NotificationBot/libraries/cpr/opt/curl/include/curl -isystem /usr/local/include 
 

@@ -1,10 +1,15 @@
 #include <iostream>
-#include <string>
 #include "../include/weather.h"
 
+using namespace std;
 int main()
 {
-    Weather weather = Weather("Toronto");
-    auto data = weather.getWeatherData();
-    std::cout << data << std::endl;
+
+    Weather userWeather = Weather("Toronto");
+    cout << userWeather.getCity() << endl;
+    cout << userWeather.getDescription() << endl;
+    cout << userWeather.getHumidity() << endl;
+    cout << userWeather.getTemperature() << endl;
+    cout << userWeather.getWindSpeed() << endl;
+    
 }

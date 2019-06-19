@@ -21,12 +21,15 @@ add_executable(
 #   ${MODELS_DIR}/Person.cpp
 )
 
+find_package(nlohmann_json 3.2.0 REQUIRED)
+
 #find libraries
 add_subdirectory(libraries/cpr)
 
+
 # Add all the source files needed to build the executable
 
-target_link_libraries (NotificationBot cpr)
+target_link_libraries (NotificationBot cpr nlohmann_json::nlohmann_json)
 
 
 
