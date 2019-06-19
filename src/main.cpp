@@ -1,7 +1,10 @@
 #include <iostream>
+#include <string>
+#include "../include/weather.h"
 
 int main()
 {
-    std::cout << "Hello there!" << std::endl;
-
+    Weather weather = Weather("Toronto");
+    auto data = weather.getWeatherData();
+    std::cout << data << std::endl;
 }
