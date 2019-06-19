@@ -26,6 +26,8 @@ find_package(nlohmann_json 3.2.0 REQUIRED)
 #find libraries
 add_subdirectory(libraries/cpr)
 
+include_directories(${CPR_INCLUDE_DIRS})
+target_link_libraries(NotificationBot ${CPR_LIBRARIES})
 
 # Add all the source files needed to build the executable
 
