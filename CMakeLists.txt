@@ -16,6 +16,7 @@ add_executable(
   NotificationBot
   src/main.cpp
   src/weather.cpp
+  src/export.cpp
 #   ${HELPERS_DIR}/AwesomeHelper.cpp
 #   ${HELPERS_DIR}/OkHelper.cpp
 #   ${MODELS_DIR}/Person.cpp

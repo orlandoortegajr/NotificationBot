@@ -1,4 +1,3 @@
-#include <iostream>
 #include <cpr/cpr.h>
 #include "../include/weather.h"
 

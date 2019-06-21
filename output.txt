@@ -1,0 +1,5 @@
+Weather in Oakville, CA
+Conditions: moderate rain
+Temperature: 16.200000C
+Humidity: 93%
+Wind Speed: 4.600000miles/h

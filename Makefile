@@ -520,6 +520,33 @@ get_tests/fast:
 	$(MAKE) -f libraries/cpr/test/CMakeFiles/get_tests.dir/build.make libraries/cpr/test/CMakeFiles/get_tests.dir/build
 .PHONY : get_tests/fast
 
+src/export.o: src/export.cpp.o
+
+.PHONY : src/export.o
+
+# target to build an object file
+src/export.cpp.o:
+	$(MAKE) -f CMakeFiles/NotificationBot.dir/build.make CMakeFiles/NotificationBot.dir/src/export.cpp.o
+.PHONY : src/export.cpp.o
+
+src/export.i: src/export.cpp.i
+
+.PHONY : src/export.i
+
+# target to preprocess a source file
+src/export.cpp.i:
+	$(MAKE) -f CMakeFiles/NotificationBot.dir/build.make CMakeFiles/NotificationBot.dir/src/export.cpp.i
+.PHONY : src/export.cpp.i
+
+src/export.s: src/export.cpp.s
+
+.PHONY : src/export.s
+
+# target to generate assembly for a file
+src/export.cpp.s:
+	$(MAKE) -f CMakeFiles/NotificationBot.dir/build.make CMakeFiles/NotificationBot.dir/src/export.cpp.s
+.PHONY : src/export.cpp.s
+
 src/main.o: src/main.cpp.o
 
 .PHONY : src/main.o
@@ -614,6 +641,9 @@ help:
 	@echo "... post_tests"
 	@echo "... session_tests"
 	@echo "... get_tests"
+	@echo "... src/export.o"
+	@echo "... src/export.i"
+	@echo "... src/export.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
