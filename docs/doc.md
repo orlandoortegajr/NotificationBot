@@ -1,4 +1,4 @@
-##Planning
+## Planning
 
 Send email to users in order for them to receive notifications at 
 a specific time of the day
@@ -25,9 +25,9 @@ Overall flow of final app:
     Ask for feedback and further topics
     
 
-##Doc
+## Doc
 
-###Weather
+### Weather
 Get city and country from user
 Obtain area codes for each country
 Obtain relevant weather data (temp, humidty, etc...)
