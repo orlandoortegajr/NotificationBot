@@ -26,8 +26,28 @@ def find_country_code(country):
 
 def get_weather_data(city, country_code):
     """
-    Obtains the weather data from the city in the given country by the user.
-    This data includes weather status, description, temp, humidity, max_temp, min_temp, wind_speed.
+    Returns all the weather data needed which includes: weather status, description, temp, humidity, max_temp, min_temp, wind_speed.
+    """
+
+    #json data obtained from response
+    json_data = _response_content(city, country_code)
+
+    #store required data from response in their respective keys
+    weather_dict = dict(
+        status = json_data["weather"][0]["main"], 
+        description = json_data["weather"][0]["description"], 
+        temperature = json_data["main"]["temp"], 
+        humidity = json_data["main"]["humidity"],
+        max_temperature = json_data["main"]["temp_max"], 
+        min_temperature = json_data["main"]["temp_min"],
+        wind_speed =  json_data["wind"]["speed"]
+    )
+
+    return weather_dict
+
+def _response_content(city, country_code):
+    """
+    Handles api responses and returns it's content
     """
 
     #{0} = city name
@@ -44,18 +64,4 @@ def get_weather_data(city, country_code):
         print("An error occured")
         return {"error": "data could not be obtained"}
     
-    json_data = response.json()
-
-    #store data from api data in json format in their respective keys
-    print(json_data)
-    weather_dict = dict(
-        status = json_data["weather"][0]["main"], 
-        description = json_data["weather"][0]["description"], 
-        temperature = json_data["main"]["temp"], 
-        humidity = json_data["main"]["humidity"],
-        max_temperature = json_data["main"]["temp_max"], 
-        min_temperature = json_data["main"]["temp_min"],
-        wind_speed =  json_data["wind"]["speed"]
-    )
-
-    return weather_dict
+    return response.json()
