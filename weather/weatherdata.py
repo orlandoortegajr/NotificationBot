@@ -16,8 +16,8 @@ class Weather:
         """
         Initializes weather object containing all data required to send a weather notification
         """
-
-        location = _format_location(city, country)
+        location = []
+        location = self._format_location(city, country)
         self.city = location[0]
         self.country_code = location[1] 
         #weather data structure
@@ -51,70 +51,46 @@ class Weather:
 
         return self.weather_dict["description"]
 
-    def get_temperature_celcius(self, c_temp):
+    def get_temperature(self, c_temp, t_temp = 0):
         """
         Return the temperature corresponding to the given letter:\n
         c -> celcius \n
         f -> fahrenheit \n
-        k -> kelvin 
+        k -> kelvin \n 
+
+        To access max and minimum temperatures use 1, -1 respectively as the third argument, no need for use when asking for current temperature
         """
+        #default temperature type to regular
+        temp = self.weather_dict["temperature"]
+
+        if(t_temp > 1 or t_temp < - 1):
+            #TODO: handle error for when user enters incorrect third argument
+            print("invalid value")
+        elif(t_temp == 1):
+            temp = self.weather_dict["max_temperature"]
+        elif(t_temp == -1):
+            temp = self.weather_dict["min_temperature"]
 
         if(c_temp == "c"):
-            return kelvin_to_celcius(self.weather_dict["temperature"])
+            return kelvin_to_celcius(temp)
         elif(c_temp == "f"):
-            return kelvin_to_fahrenheit(self.weather_dict["temperature"])
+            return kelvin_to_fahrenheit(temp)
         elif(c_temp == "k"):
-            return self.weather_dict["temperature"]
-        else:
-            #TODO: handle error when wrong type of temperature is asked for
-            return -99999
-
-    def get_max_temperature(self, c_temp):
-        """
-        Return the maximum temperature corresponding to the given letter:\n
-        c -> celcius \n
-        f -> fahrenheit \n
-        k -> kelvin 
-        """
-
-        if(c_temp == "c"):
-            return kelvin_to_celcius(self.weather_dict["max_temperature"])
-        elif(c_temp == "f"):
-            return kelvin_to_fahrenheit(self.weather_dict["max_temperature"])
-        elif(c_temp == "k"):
-            return self.weather_dict["max_temperature"]
-        else:
-            #TODO: handle error when wrong type of temperature is asked for
-            return -99999
-
-    def get_min_temperature(self, c_temp):
-        """
-        Return the minimum temperature corresponding to the given letter:\n
-        c -> celcius \n
-        f -> fahrenheit \n
-        k -> kelvin 
-        """
-
-        if(c_temp == "c"):
-            return kelvin_to_celcius(self.weather_dict["min_temperature"])
-        elif(c_temp == "f"):
-            return kelvin_to_fahrenheit(self.weather_dict["min_temperature"])
-        elif(c_temp == "k"):
-            return self.weather_dict["min_temperature"]
+            return temp
         else:
             #TODO: handle error when wrong type of temperature is asked for
             return -99999
 
     def get_humidity(self):
         """
-        Returns weather humidity
+        Returns weather humidity in %
         """
 
         return self.weather_dict["humidity"]
 
     def get_wind_speed(self):
         """
-        Returns wind speed
+        Returns wind speed in meters/seconds
         """
 
         return self.weather_dict["wind_speed"]
@@ -133,9 +109,10 @@ class Weather:
 
         #TODO: Check if city exists
         #obtain the correct format first before setting the values
-        location = _format_location(city, country)
+        location = self._format_location(city, country)
         self.city = location[0]
         self.country_code = location[1]
+        self.weather_dict = get_weather_data(self.city, self.country_code)   
 
 
 
