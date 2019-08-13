@@ -1,0 +1,16 @@
+from weather.weather import Weather
+from setup import format_weather_msg, footer, subject
+from settings import receiver
+from mail.gmail import send_email
+
+
+
+#get the desired location's weather data
+w_data = Weather("Toronto", "Canada")
+
+#create the message text
+msg_text = format_weather_msg(w_data) + footer()
+
+#send the msg
+send_email(subject(),msg_text)
+

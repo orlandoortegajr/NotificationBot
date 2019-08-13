@@ -1,123 +1,84 @@
-from .w_data import find_country_code, get_weather_data
-from .helpers import kelvin_to_celcius, kelvin_to_fahrenheit
+import json
+import requests
+from settings import weather_key
 """
-Representation of weather object, allowing for weather data to be used in other modules.
-
-All data accessed is current weather data
+This file handles all data processing from looking at json files to making 
+API calls.
 """
 
-class Weather:
+def find_country_code(country):
     """
-    Object representing weather data, also handles all operations including
-    obtaining data and making api calls.
+    Gets the correct 2-letter country code in order to make api calls.
+
+    Args:
+        country: the country where the city(location for weather) is located at.
     """
 
-    def __init__(self, city, country):
-        """
-        Initializes weather object containing all data required to send a weather notification
-        """
-        location = []
-        location = self._format_location(city, country)
-        self.city = location[0]
-        self.country_code = location[1] 
-        #weather data structure
-        self.weather_dict = get_weather_data(self.city, self.country_code)   
+    #open the json file
+    with open('data/countrycodes.json','r') as c:
+        country_dict = json.load(c)
+    #compare each item to find the matching country
+    for item in country_dict:
+        #make comparisons with both items lowercase
+        if(country.lower() == item["name"].lower()):
+            #return the lowercase form of the country code
+            return item["code"].lower()
     
-    def get_city(self):
-        """
-        Returns current city
-        """
+    #TODO: make exception for when the country could not be found
+    print("Country was not found")
 
-        return self.city
+def get_weather_data(city, country_code):
+    """
+    Processes JSON data obtained from API calls
 
-    def get_code(self):
-        """
-        Returns country 2-letter code
-        """
+    Args:
+        city: the location where the data comes from.
+        country_code: 2-letter code of the country where the city is located.
 
-        return self.country_code
+    Returns:
+        Weather data needed which includes: weather status, description, temp, humidity, max_temp, min_temp, wind_speed.
+    """
 
-    def get_status(self):
-        """
-        Returns weather status
-        """
+    #json data obtained from response
+    json_data = _response_content(city, country_code)
 
-        return self.weather_dict["status"]
+    #store required data from response in their respective keys
+    weather_dict = dict(
+        status = json_data["weather"][0]["main"], 
+        description = json_data["weather"][0]["description"], 
+        temperature = json_data["main"]["temp"], 
+        humidity = json_data["main"]["humidity"],
+        max_temperature = json_data["main"]["temp_max"], 
+        min_temperature = json_data["main"]["temp_min"],
+        wind_speed =  json_data["wind"]["speed"]
+    )
 
-    def get_description(self):
-        """
-        Returns the current weather's description
-        """
+    return weather_dict
 
-        return self.weather_dict["description"]
+def _response_content(city, country_code):
+    """
+    Handles api calls and their respective responses.
 
-    def get_temperature(self, c_temp, t_temp = 0):
-        """
-        Return the temperature corresponding to the given letter:\n
-        c -> celcius \n
-        f -> fahrenheit \n
-        k -> kelvin \n 
-
-        To access max and minimum temperatures use 1, -1 respectively as the third argument, no need for use when asking for current temperature
-        """
-        #default temperature type to regular
-        temp = self.weather_dict["temperature"]
-
-        if(t_temp > 1 or t_temp < - 1):
-            #TODO: handle error for when user enters incorrect third argument
-            print("invalid value")
-        elif(t_temp == 1):
-            temp = self.weather_dict["max_temperature"]
-        elif(t_temp == -1):
-            temp = self.weather_dict["min_temperature"]
-
-        if(c_temp == "c"):
-            return kelvin_to_celcius(temp)
-        elif(c_temp == "f"):
-            return kelvin_to_fahrenheit(temp)
-        elif(c_temp == "k"):
-            return temp
-        else:
-            #TODO: handle error when wrong type of temperature is asked for
-            return -99999
-
-    def get_humidity(self):
-        """
-        Returns weather humidity in %
-        """
-
-        return self.weather_dict["humidity"]
-
-    def get_wind_speed(self):
-        """
-        Returns wind speed in meters/seconds
-        """
-
-        return self.weather_dict["wind_speed"]
-
-    def _format_location(self, city, country):
-        """
-        Returns location data in the correct format 
-        """
-
-        return [city.lower(), find_country_code(country)]
-
-    def set_new_location(self, city, country):
-        """
-        Sets the variables representing location in the object
-        """
-
-        #TODO: Check if city exists
-        #obtain the correct format first before setting the values
-        location = self._format_location(city, country)
-        self.city = location[0]
-        self.country_code = location[1]
-        self.weather_dict = get_weather_data(self.city, self.country_code)   
-
-
-
+    Args:
+        city: the location where the weather data comes from.
+        country_code: 2-letter code of the country where the city is located.
     
+    Returns:
+        Response in JSON format
+    """
 
+    #{0} = city name
+    #{1} = country code
+    #{2} = api key
+    response = requests.get(
+        'http://api.openweathermap.org/data/2.5/weather?q={0},{1}&appid={2}'.format(city, country_code, weather_key)
+    )
 
+    #TODO: properly handle successful/unsuccessful api calls
+    if(response):
+        print("call successful!")
+    else:
+        print("An error occured")
+        return {"error": "data could not be obtained"}
     
-    
+    return response.json()

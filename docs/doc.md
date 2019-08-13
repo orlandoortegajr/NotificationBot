@@ -9,6 +9,8 @@ Kinds of Notifications:
     English Premier League 
     Holidays
     Scheduled Events
+    Twitch Streamers
+    
 
 Tasks for each type of data:
     Create object for each individual type of data
