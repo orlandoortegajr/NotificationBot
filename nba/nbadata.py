@@ -1,9 +1,13 @@
 import requests
 from .team import Team
+"""
+This file handles all data processing from API calls
+"""
 
 def get_nba_teams():
     """
-    Formats the nba teams from response into a usable format.
+    Formats the nba teams from response in the following format: a dictionary
+    with key the full team name and the value being additional data: tricode, id, and nickname
 
     Returns:
         dictionary of teams and their details
@@ -19,6 +23,48 @@ def get_nba_teams():
                 team_dict[team["fullName"]] = Team(team["fullName"], team["tricode"], team["teamId"], team["nickname"])
     
     return team_dict
+
+def get_team_schedule(team_id):
+    """
+    Processes the nba schedules for the given team for use.
+
+    Args:
+        team_id: id code for the nba team from which the schedule will be obtained.
+    
+    Returns:
+        A list of tuples containing the matchup in the first index, and the date in the second index.
+    """
+    schedules = __nba_response_schedules(team_id)
+    team_schedule = []
+
+    for region in schedules["league"]:
+        if(region == "lastStandardGamePlayedIndex"):
+            continue
+        for game in region:
+            team_schedule.append(game["gameUrlCode"])
+
+    return format_games(team_schedule)
+
+def format_games(schedule_list):
+    """
+    Formats the games for cleaner use.
+
+    Args:
+        schedule_list: list of all the scheduled matchups for the team
+    
+    Returns:
+        a list of tuples with the first index being the matchup, and the second being the date
+    """
+    final_schedule = []
+    for game in schedule_list:
+        year = game[0:4]
+        month = game[4:6]
+        day = game[6:8]
+        teams = game[9:15]
+        final_schedule.append((teams, month+"/"+day+"/"+year))
+    
+    return final_schedule
+
 
 def __nba_response_teams():
     """
