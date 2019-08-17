@@ -1,20 +1,22 @@
 import requests
+from .team import Team
 
 def get_nba_teams():
+    """
+    Formats the nba teams from response into a usable format.
+
+    Returns:
+        dictionary of teams and their details
+    """
 
     team_data = __nba_response_teams()
     team_dict = dict()
 
+    #break down response so only the useful data is extracted
     for region in team_data["league"]:
         for team in team_data["league"][region]:
             if(team["isNBAFranchise"] == True and team["isAllStar"] == False):
-                team_dict[team["fullName"]] = {
-                    "city": team["city"],
-                    "tricode": team["tricode"],
-                    "id": team["teamId"],
-                    "nickname": team["nickname"],
-                    "conference": team["confName"]
-                }
+                team_dict[team["fullName"]] = Team(team["fullName"], team["tricode"], team["teamId"], team["nickname"])
     
     return team_dict
 
@@ -58,7 +60,4 @@ def __nba_response_schedules(team_id):
         return {"error": "data could not be obtained"}
     
     return response.json()
-
-if __name__ == "__main__":
-    print(get_nba_teams())
 
