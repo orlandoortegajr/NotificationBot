@@ -44,7 +44,7 @@ def get_weather_data(city, country_code):
     """
 
     #json data obtained from response
-    json_data = _response_content(city, country_code)
+    json_data = __response_content(city, country_code)
 
     #store required data from response in their respective keys
     weather_dict = dict(
@@ -59,7 +59,7 @@ def get_weather_data(city, country_code):
 
     return weather_dict
 
-def _response_content(city, country_code):
+def __response_content(city, country_code):
     """
     Handles api calls and their respective responses.
 

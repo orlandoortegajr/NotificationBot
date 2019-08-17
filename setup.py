@@ -25,12 +25,12 @@ def format_weather_msg(w : Weather):
     """.format(
         w.get_city().capitalize(), 
         w.get_code().upper(), 
-        "{0:.2f}".format(w.get_temperature("c")),
+        "{0:.1f}".format(w.get_temperature("c")),
         w.get_status(),
         w.get_description().capitalize(),
         str(w.get_humidity())+"%",
-        "{0:.2f}".format(w.get_temperature("c", 1)),
-        "{0:.2f}".format(w.get_temperature("c",-1)),
+        "{0:.1f}".format(w.get_temperature("c", 1)),
+        "{0:.1f}".format(w.get_temperature("c",-1)),
         str(w.get_wind_speed()) + " meters/second"
         )
 

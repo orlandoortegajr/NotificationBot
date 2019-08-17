@@ -20,7 +20,7 @@ class Weather:
             country: the country where the city belongs.
         """
         location = []
-        location = self._format_location(city, country)
+        location = self.__format_location(city, country)
         self.city = location[0]
         self.country_code = location[1] 
         #weather data structure
@@ -125,7 +125,7 @@ class Weather:
 
         return self.weather_dict["wind_speed"]
 
-    def _format_location(self, city, country):
+    def __format_location(self, city, country):
         """
         Formats the location variables given to conform API call requirements.
 
@@ -146,7 +146,7 @@ class Weather:
 
         #TODO: Check if city exists
         #obtain the correct format first before setting the values
-        location = self._format_location(city, country)
+        location = self.__format_location(city, country)
         self.city = location[0]
         self.country_code = location[1]
         self.weather_dict = get_weather_data(self.city, self.country_code)   

@@ -10,7 +10,7 @@ It's intended use is for receiving details about:
 ## How-to-use:
 Send an email to notificationbot101@gmail.com with subject "user" and in the content's first line include your email.
 
-An email will be sent at 8:00 am everyday
+An email will be sent at 8:00 A.M. everyday.
 
 ## Future Additions
 If you'd like for new topics to be introduced to the bot, send an email to notificationbot101@gmail.com with subject "suggestion".
