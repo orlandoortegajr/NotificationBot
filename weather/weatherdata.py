@@ -1,6 +1,7 @@
 import json
 import requests
-from settings import weather_key
+from settings import weather_key, current_path
+import os.path
 """
 This file handles all data processing from looking at json files to making 
 API calls.
@@ -14,8 +15,11 @@ def find_country_code(country):
         country: the country where the city(location for weather) is located at.
     """
 
+    data_folder = os.path.join(current_path,"data/")
+    file = os.path.join(data_folder, "countrycodes.json")
+
     #open the json file
-    with open('data/countrycodes.json','r') as c:
+    with open(file,'r') as c:
         country_dict = json.load(c)
     #compare each item to find the matching country
     for item in country_dict:

@@ -7,9 +7,7 @@ Kinds of Notifications:
     Weather 
     NBA 
     English Premier League 
-    Holidays
-    Scheduled Events
-    Twitch Streamers
+    Top 5 news articles for the day
     
 
 Tasks for each type of data:
@@ -20,17 +18,13 @@ Tasks for each type of data:
 
 Overall flow of final app:
     Ask user for email
-    Ask user for desired topics
-    Ask user for time and days in which they would like to receive the              notifications
-    Store this data in a database to keep track
     Send users their data
     Ask for feedback and further topics
-    
 
-## Doc
+##Troubleshoot
+To get the script to run:
+ type crontab -e on terminal
+ type * 8 * * * (this gets the script to run at 8 am everyday) directory/of/python3/ directory/of/file/to/run
+ 
 
-### Weather
-Get city and country from user
-Obtain area codes for each country
-Obtain relevant weather data (temp, humidty, etc...)
         

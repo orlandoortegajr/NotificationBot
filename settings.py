@@ -7,6 +7,7 @@ weather_key = os.getenv("WEATHER_API_KEY")
 email = os.getenv("EMAIL")
 email_password = os.getenv("EMAIL_PASSWORD")
 receiver = os.getenv("RECEIVER")
+current_path = os.getenv("CURRENT_PATH")
 
 #Test to see if variables were obtained
 if __name__ == "__main__":
