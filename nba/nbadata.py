@@ -12,7 +12,6 @@ def get_nba_teams():
     Returns:
         dictionary of teams and their details
     """
-
     team_data = __nba_response_teams()
     team_dict = dict()
 
@@ -20,11 +19,12 @@ def get_nba_teams():
     for region in team_data["league"]:
         for team in team_data["league"][region]:
             if(team["isNBAFranchise"] == True and team["isAllStar"] == False):
-                team_dict[team["fullName"]] = Team(team["fullName"], team["tricode"], team["teamId"], team["nickname"])
+                team_dict[team["fullName"]] = Team(team["fullName"], team["tricode"], 
+                                                   team["teamId"], team["nickname"])
     
     return team_dict
 
-def get_team_schedule(team_id):
+def get_team_games(teams, team_id):
     """
     Processes the nba schedules for the given team for use.
 
@@ -40,12 +40,12 @@ def get_team_schedule(team_id):
     for region in schedules["league"]:
         if(region == "lastStandardGamePlayedIndex"):
             continue
-        for game in region:
-            team_schedule.append(game["gameUrlCode"])
+        for game in schedules["league"][region]:
+            team_schedule.append(game["gameUrlCode"]+game["homeStartTime"])
 
-    return format_games(team_schedule)
+    return format_games(teams, team_schedule)
 
-def format_games(schedule_list):
+def format_games(teams, schedule_list):
     """
     Formats the games for cleaner use.
 
@@ -60,10 +60,29 @@ def format_games(schedule_list):
         year = game[0:4]
         month = game[4:6]
         day = game[6:8]
-        teams = game[9:15]
-        final_schedule.append((teams, month+"/"+day+"/"+year))
+        home = __find_team(teams, game[9:12])
+        away = __find_team(teams,game[12:15])
+        hour = game[15:17]
+        minutes = game[17:19]
+        final_schedule.append([home,away, month+"/"+day+"/"+year, hour+":"+minutes])
     
     return final_schedule
+
+def __find_team(teams, team_tricode):
+    """
+    Auxilary function to find the team that matches the tricode.
+
+    Args:
+        team_tricode: the tricode of the given team.
+
+    Returns:
+        corresponding team for the given tricode
+    """
+
+    #team = key(full team names) in the dictionary of teams
+    for team in teams:
+        if(teams[team].get_tricode() == team_tricode):
+            return team
 
 
 def __nba_response_teams():

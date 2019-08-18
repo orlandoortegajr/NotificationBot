@@ -1,5 +1,6 @@
-from .nbadata import get_nba_teams, get_team_schedule
-
+from .nbadata import get_nba_teams, get_team_games
+from .team import Team
+from datetime import datetime
 
 class League:
     """
@@ -29,9 +30,19 @@ class League:
             team_name: full name of the team being looked at.
         
         Returns:
-            the entire schedule for the given team in a list of tuples format where the first index is the matchup and the second the date
+            the entire schedule for the given team in a list of tuples format where the first 
+            index is the matchup and the second the date.
         """
-        schedule = get_team_schedule()
+        team = self.teams[team_name]
+        schedule = get_team_games(self.teams, team.get_id())
+        final_schedule = []
+
+        for game in schedule:
+            final_schedule.append("{0} vs. {1} on {2} at {3}".format(game[0], game[1], game[2], game[3]))
+
+        return final_schedule
+
+
 
     def get_next_game(self, team_name):
         """
@@ -41,6 +52,13 @@ class League:
             team_name: full name of the team being looked at.
         
         Returns:
-            the next game on schedule for the given team in a tuple format where the first index is the matchup and the second the date
+            the next game on schedule for the given team in a tuple format where the first index is 
+            the matchup and the second the date.
         """
-        pass
+        
+        current_date = datetime.now()
+        schedule = self.get_team_schedule("Toronto Raptors")
+
+        for game in schedule:
+            if(game[2] > current_date):
+                return "{0} vs. {1} on {2} at {3}".format(game[0], game[1], game[2], game[3])

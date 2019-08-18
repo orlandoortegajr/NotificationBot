@@ -22,7 +22,7 @@ class Team:
     def get_tricode(self):
         return self.tricode
     
-    def __get_id(self):
+    def get_id(self):
         return self.id
 
     def get_nickname(self):

@@ -80,7 +80,7 @@ def __response_content(city, country_code):
 
     #TODO: properly handle successful/unsuccessful api calls
     if(response):
-        print("call successful!")
+        print("weather call successful!")
     else:
         print("An error occured")
         return {"error": "data could not be obtained"}
