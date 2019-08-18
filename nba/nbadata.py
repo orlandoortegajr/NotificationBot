@@ -7,10 +7,10 @@ This file handles all data processing from API calls
 def get_nba_teams():
     """
     Formats the nba teams from response in the following format: a dictionary
-    with key the full team name and the value being additional data: tricode, id, and nickname
+    with key the full team name and the value being additional data: tricode, id, and nickname.
 
     Returns:
-        dictionary of teams and their details
+        dictionary of teams and their details.
     """
     team_data = __nba_response_teams()
     team_dict = dict()
@@ -21,7 +21,7 @@ def get_nba_teams():
             if(team["isNBAFranchise"] == True and team["isAllStar"] == False):
                 team_dict[team["fullName"]] = Team(team["fullName"], team["tricode"], 
                                                    team["teamId"], team["nickname"])
-    
+
     return team_dict
 
 def get_team_games(teams, team_id):
@@ -29,17 +29,22 @@ def get_team_games(teams, team_id):
     Processes the nba schedules for the given team for use.
 
     Args:
+        teams: dictionary of teams
         team_id: id code for the nba team from which the schedule will be obtained.
     
     Returns:
-        A list of tuples containing the matchup in the first index, and the date in the second index.
+        A list of of lists containing schedule games information in the format: 
+        [["Toronto Raptors"(Away Team), "New Orleans Pelicans"(Home Team), "10/24/2019", "19:00"], ...].
     """
     schedules = __nba_response_schedules(team_id)
     team_schedule = []
 
+    #go through the games in each different region
     for region in schedules["league"]:
+        #skip unnecessary content
         if(region == "lastStandardGamePlayedIndex"):
             continue
+        #places information into team schedule in the format: "20191024/ATLDET1900", where 19:00 means 7 PM
         for game in schedules["league"][region]:
             team_schedule.append(game["gameUrlCode"]+game["homeStartTime"])
 
@@ -50,20 +55,30 @@ def format_games(teams, schedule_list):
     Formats the games for cleaner use.
 
     Args:
-        schedule_list: list of all the scheduled matchups for the team
+        teams: full list of NBA teams.
+        schedule_list: list of all the scheduled matchups for the team.
     
     Returns:
-        a list of tuples with the first index being the matchup, and the second being the date
+        A list of of lists containing schedule games information in the format: 
+        [["Toronto Raptors"(Away Team), "New Orleans Pelicans"(Home Team), "10/24/2019", "19:00"], ...].
     """
     final_schedule = []
+
+    #iterate through individual games
     for game in schedule_list:
+
+        #extracts the data based on the format given from the API
         year = game[0:4]
         month = game[4:6]
         day = game[6:8]
+
+        #need to convert tricodes into the full team name, hence the function call
         home = __find_team(teams, game[9:12])
         away = __find_team(teams,game[12:15])
+
         hour = game[15:17]
         minutes = game[17:19]
+
         final_schedule.append([home,away, month+"/"+day+"/"+year, hour+":"+minutes])
     
     return final_schedule
@@ -73,15 +88,18 @@ def __find_team(teams, team_tricode):
     Auxilary function to find the team that matches the tricode.
 
     Args:
+        teams: list of NBA teams.
         team_tricode: the tricode of the given team.
 
     Returns:
         corresponding team for the given tricode
     """
 
-    #team = key(full team names) in the dictionary of teams
+    #team = key(full team names, example: Toronto Raptors) in the dictionary of teams
     for team in teams:
         if(teams[team].get_tricode() == team_tricode):
+            #by returning team we are returning the name of the key in the list of teams which ends
+            #up being the full name of the team
             return team
 
 
