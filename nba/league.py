@@ -56,9 +56,13 @@ class League:
             the matchup and the second the date.
         """
         
+        
+        team = self.teams[team_name]
+        schedule = get_team_games(self.teams, team.get_id())
         current_date = datetime.now()
-        schedule = self.get_team_schedule("Toronto Raptors")
 
         for game in schedule:
-            if(game[2] > current_date):
+            #convert string to date
+            game_date = datetime.strptime(game[2],'%m/%d/%Y')
+            if(game_date > current_date):
                 return "{0} vs. {1} on {2} at {3}".format(game[0], game[1], game[2], game[3])
